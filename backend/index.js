@@ -10,9 +10,7 @@ app.use(express.json())
 
 mongoose.connect("mongodb://localhost:27017/wallet")
 app.use("/api/v1",mainRouter)  //intializes use of Router with url
-app.get("./",function(req,res){
-    res.send("hi")
-})
+
 app.listen("3000",function(err){
     if(err)console.log(err)
     console.log("Server is running on 3000")

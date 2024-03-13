@@ -6,7 +6,7 @@ const { default: mongoose } = require("mongoose");
 router.get("/balance",async function(req,res){                 //get intial balance in user acc           
     //find user based on userid
     const account=await Account.findOne({
-        userrId:req.userrId
+        userId:req.userId
     })
     res.json({
         balance:account.balance                          //balance from acc stored in mongodb
@@ -19,7 +19,7 @@ router.post("/transfer", async function(req, res){              //transfer money
     const { amount, to } = req.body;
 
     // fetch account using userId
-    const account = await Account.find({ userrId: to }).session(session);
+    const account = await Account.find({ userId: to }).session(session);
     if (!account) {
         await session.abortTransaction();                   //abort transaction
         return res.status(400).json({
@@ -27,11 +27,11 @@ router.post("/transfer", async function(req, res){              //transfer money
         });
     }
     await Account.updateOne({
-        userrId: req.userrId
+        userId: req.userId
     },
     { $inc: { balance: -amount } }).session(session);
     await Account.updateOne({
-        userrId: to
+        userId: to
     },
     { $inc: { balance: amount } }).session(session);
 

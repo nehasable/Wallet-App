@@ -14,7 +14,7 @@ const signupSchema=zod.object({        //declare zod object
     username:zod.string().email(),
     firstname:zod.string(),
     lastname:zod.string(),
-    password:zod.string.mi
+    password:zod.string().min(8)
 })
 router.post("/signup", async function(req,res){
     const body=req.body 
@@ -36,14 +36,14 @@ router.post("/signup", async function(req,res){
 
     //Add balance to user's acc
 await Account.create({
-    userrId,
+    userId:dbUser._id,
     balance: Math.random() *2
 })
 
     const token=jwt.sign({
-        userId:dbUser._id
+        userId:User._id
     },JWT_SECRET)
-    es.json({
+    res.json({
         message:"User created",
         token:token
     })
@@ -68,9 +68,9 @@ router.post("/signin",async function(req,res){
      })
      if(userSignin){                                          //hash userid and return it
         const token=jwt.sign({
-            userId:dbUser._id
+            userId:User._id
         },JWT_SECRET)
-        es.json({
+        res.json({
             message:"User signedin",
             token:token
         })
