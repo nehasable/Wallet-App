@@ -13,7 +13,7 @@ function SignUp() {
             <label className='mb-2'>Last Name</label><input type='text' className='mb-2 border border-gray-300'></input>
             <label className='mb-2'>Username</label><input type='text' className='mb-2 border border-gray-300'></input>
             <label className='mb-2'>Password</label><input type='text' className='mb-2 border border-gray-300'></input>
-            <button className='bg-black text-white mt-3 mb-3 border rounded-lg border-gray-300 ' >Sign Up</button>
+            <Link to="/dashboard"><button className='bg-black text-white mt-3 mb-3 border rounded-lg border-gray-300 w-full' >Sign Up</button></Link>
             <label >Already have an account? <Link to="/signin"><button className='underline'>Sign in</button></Link></label>
         </div>
        
