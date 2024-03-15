@@ -37,7 +37,7 @@ router.post("/signup", async function(req,res){
     //Add balance to user's acc
 await Account.create({
     userId:dbUser._id,
-    balance: Math.random() *2
+    balance: Math.random() *2000
 })
 
     const token=jwt.sign({

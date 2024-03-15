@@ -19,7 +19,7 @@ router.post("/transfer", async function(req, res){              //transfer money
     const { amount, to } = req.body;
 
     // fetch account using userId
-    const account = await Account.find({ userId: to }).session(session);
+    const account = await Account.findOne({ userId: to }).session(session);
     if (!account) {
         await session.abortTransaction();                   //abort transaction
         return res.status(400).json({
