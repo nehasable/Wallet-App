@@ -12,7 +12,7 @@ function SendMoney() {
                         <img src={userImage} alt="User" className="object-cover w-full h-full" />
                     </div><label className='ml-2 text-lg '>Account Name</label></div>
                 <label className='mb-2 text-gray-500'>Amount (in Rs)</label><input type='text' className='mb-2 border border-gray-300'></input>
-                <Link to="/dashboard"><button className='bg-blue-500 text-white mt-3 mb-3 border rounded-lg border-gray-300 h-10 w-full' >Transfer</button></Link>
+                <button className='bg-blue-500 text-white mt-3 mb-3 border rounded-lg border-gray-300 h-10 w-full' >Transfer</button>
                 
             </div>
            
