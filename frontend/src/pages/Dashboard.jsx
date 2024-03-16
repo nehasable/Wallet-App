@@ -1,5 +1,6 @@
 import React from 'react';
 import userImage from "../pages/icon.png"
+import { Link } from 'react-router-dom';
 function Dashboard() {
     return (
         <div>
@@ -14,9 +15,15 @@ function Dashboard() {
                   <input type="text" placeholder='Search users..' className=' ml-4 w-[1350px] border rounded-md border-gray-300 h-10 '></input>
                     </div> 
         <div className='p-6 flex flex-col gap-8'>
-<div className='flex items-center justify-between'><span className='ml-14 '>User 1</span><button className='bg-blue-500 text-white mr-24 border rounded-lg  h-10 w-40'>Send Money</button></div>
-<div className='flex items-center justify-between'><span className='ml-14'>User 2</span><button className='bg-blue-500 text-white mr-24 border rounded-lg  h-10 w-40'>Send Money</button></div>
-<div className='flex items-center justify-between'><span className='ml-14'>User 3</span><button className='bg-blue-500 text-white mr-24 border rounded-lg  h-10 w-40'> Send Money</button></div>
+<div className='flex items-center justify-between'>
+   
+               <span className='ml-4 '>User 1</span>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link>
+</div>
+<div className='flex items-center justify-between'><span className='ml-4'>User 2</span>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div>
+<div className='flex items-center justify-between'><span className='ml-4'>User 3</span>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div>
         </div>
         
         </div>
