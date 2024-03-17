@@ -16,39 +16,47 @@ const signupSchema=zod.object({        //declare zod object
     lastname:zod.string(),
     password:zod.string().min(8)
 })
-router.post("/signup", async function(req,res){
-    const body=req.body 
-    const {success}=signupSchema.safeParse(req.body)    //check if inputs pass zod validation
-    if(!success){
+router.post("/signup", async (req, res) => {
+
+    const { success } = signupSchema.safeParse(req.body)
+    if (!success) {
         return res.status(411).json({
-            message:"Email taken"
+            message: "Email already taken / Incorrect inputs"
         })
     }
-    const user=User.findOne({            //if user already exists
-        username:body.username
+
+    const existingUser = await User.findOne({
+        username: req.body.username
     })
-    if(user._id){
-        return res.json({
-            message:"Email taken"
+
+    if (existingUser) {
+        return res.status(411).json({
+            message: "Email already taken/Incorrect inputs"
         })
     }
-    const dbUser=await User.create(body)        //create user based on queries in body
 
-    //Add balance to user's acc
-await Account.create({
-    userId:dbUser._id,
-    balance: Math.random() *2000
-})
+    const user = await User.create({
+        username: req.body.username,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+    })
+    const userId = user._id;
 
-    const token=jwt.sign({
-        userId:User._id
-    },JWT_SECRET)
+    await Account.create({
+        userId,
+        balance: 1 + Math.random() * 10000
+    })
+
+    const token = jwt.sign({
+        userId
+    }, JWT_SECRET);
+
     res.json({
-        message:"User created",
-        token:token
+        message: "User created successfully",
+        token: token
     })
 })
-
 //-------------------------------
 const signinBody = zod.object({
     username: zod.string().email(),
