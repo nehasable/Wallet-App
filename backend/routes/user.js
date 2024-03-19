@@ -16,9 +16,9 @@ const signupSchema=zod.object({        //declare zod object
     lastname:zod.string(),
     password:zod.string().min(8)
 })
-router.post("/signup", async (req, res) => {
+router.post("/signup", async (req, res) => {                //send user details
 
-    const { success } = signupSchema.safeParse(req.body)
+    const { success } = signupSchema.safeParse(req.body)             //check user already exists
     if (!success) {
         return res.status(411).json({
             message: "Email already taken / Incorrect inputs"
@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
         })
     }
 
-    const user = await User.create({
+    const user = await User.create({          //delcare zod object for new user 
         username: req.body.username,
         password: req.body.password,
         firstName: req.body.firstName,
