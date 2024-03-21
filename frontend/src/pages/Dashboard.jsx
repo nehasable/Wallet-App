@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import userImage from "../pages/icon.png"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios"
+
 
  function Dashboard() {
     const [users,setUsers]=useState([])
     const [filter,setFilter]=useState('')
+    
     useEffect(()=>{
 //display all the users 
-axios.get("http://localhost:3000/api/v1/user/bulk" ,{ params: { filter: filter } })
+axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${filter}` )
     .then(response => {
         setUsers(response.data.users);    //-------------------obtained from backend call
         // console.log(response.data.users)
@@ -16,7 +18,7 @@ axios.get("http://localhost:3000/api/v1/user/bulk" ,{ params: { filter: filter }
     .catch(error => {
         console.error('Error fetching users:', error);
     });
-    // console.log(usersvar)
+     console.log(filter)
 },[filter])
 
 
@@ -35,15 +37,7 @@ axios.get("http://localhost:3000/api/v1/user/bulk" ,{ params: { filter: filter }
                     </div> 
         
                     <div className='p-6 flex flex-col gap-8'>
-{/* <div className='flex items-center justify-between'> */}
-   
-               {/* <span className='ml-4 '>User 1</span>
-<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link>
-</div>
-<div className='flex items-center justify-between'><span className='ml-4'>User 2</span>
-<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div>
-<div className='flex items-center justify-between'><span className='ml-4'>User 3</span>
-<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div> */}
+
    { users && users.map(user => {
         return <User user={user} />
 
@@ -57,20 +51,27 @@ axios.get("http://localhost:3000/api/v1/user/bulk" ,{ params: { filter: filter }
      
         </div>
     );
-}
+} 
 
 function User({ user }) {
-
+const navigate=useNavigate()
     
     return (
         <>
    {/* {user.username[0]} */}
         <div className="flex items-center justify-between border-b p-4">
             <p>{user.username}</p>
-            <Link to="/sendmoney">
-                <button className="bg-blue-500 text-white border rounded-lg h-8 px-4">Send Money</button>
-            </Link>
+            <div className="bg-blue-500 text-white border rounded-lg h-8 px-4">
+            <button onClick={(e) => {
+                navigate("/sendmoney?id=" + user._id + "&name=" + user.username);
+            }} >Send Money </button>
+            
         </div>
+        </div>
+
+      
+
+
         </>
     );
 }
