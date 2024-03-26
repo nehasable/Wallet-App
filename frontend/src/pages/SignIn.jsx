@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 function SignIn() {
+    
     return (
         <div className='bg-zinc-400 h-screen flex justify-center items-center'>
         <div className='bg-white h-[400px] w-[350px] flex justify-center border rounded-lg shadow-lg'>

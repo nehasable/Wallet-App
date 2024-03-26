@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import userImage from "../pages/icon.png"
 import { Link } from 'react-router-dom';
+import axios from "axios"
 function Dashboard() {
+    const [users,setUsers]=useState("")
+    useEffect(()=>{
+//display all the users 
+axios.get("http://localhost:3000/api/v1/user/bulk")    //didnt use async function      
+.then(response=>{
+    setUsers(response.data.users)
+})
+
+    },[])
     return (
         <div>
             <div className='flex flex-row items-center justify-between p-4'>
