@@ -38,8 +38,8 @@ router.post("/signup", async (req, res) => {                //send user details
     const user = await User.create({          //delcare zod object for new user 
         username: req.body.username,
         password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
     })
     const userId = user._id;
 
@@ -92,8 +92,8 @@ router.post("/signin",async function(req,res){
 //------------------
 const userUpdate=zod.object({
 	password: zod.string().optional(),
-    firstName: zod.string().optional(),
-    lastName: zod.string().optional(),
+    firstname: zod.string().optional(),
+    lastname: zod.string().optional(),
 })
 router.put("/",authMiddleware, async function(req,res){
     const {success}=userUpdate.safeParse(req.body)
@@ -108,40 +108,31 @@ router.put("/",authMiddleware, async function(req,res){
         message:"Updated successfully"
     })
 })
+// Find users by ID or display list of all users
 router.get("/bulk", async (req, res) => {
-    const filter = req.query.filter || "";
+    try {
+        const filter = req.query.filter;
 
-    const users = await User.find({
-        $or: [{
-            firstName: {
-                "$regex": filter
-            }
-        }, {
-            lastName: {
-                "$regex": filter
-            }
-        }]
-    })
-
-    res.json({
-        user: users.map(user => ({
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            _id: user._id
-        }))
-    })
-}) 
-
-
-
-
-
-
-
-
-
-
+        if (filter) {
+            // Find users by filter
+            const users = await User.find({
+                $or: [
+                    { firstname: { $regex: filter, $options: 'i' } },
+                    { lastname: { $regex: filter, $options: 'i' } }
+                
+                ]
+            });
+            res.json({ usersvar: users });
+        } else {
+            // Display list of all users
+            const users = await User.find({});
+            res.json({ usersvar: users });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "An error occurred" });
+    }
+});
 
 
 module.exports=router
