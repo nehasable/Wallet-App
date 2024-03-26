@@ -27,7 +27,7 @@ function SignUp() {
                     password 
                 })
                localStorage.setItem("token", response.data.token) //stores token in web
-               localStorage.removeItem('token')
+               
             }} className='bg-black text-white mt-3 mb-3 border rounded-lg border-gray-300 w-full' >Sign Up</button></Link>
             <label lassName='ml-4'>Already have an account? <Link to="/signin"><button className='underline'>Sign in</button></Link></label>
         </div>

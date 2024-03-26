@@ -8,7 +8,7 @@ function Dashboard() {
 //display all the users 
 axios.get("http://localhost:3000/api/v1/user/bulk")    //didnt use async function      
 .then(response=>{
-    setUsers(response.data.users)
+    setUsers(response.data.user)
 })
 
     },[])
@@ -27,14 +27,19 @@ axios.get("http://localhost:3000/api/v1/user/bulk")    //didnt use async functio
         <div className='p-6 flex flex-col gap-8'>
 <div className='flex items-center justify-between'>
    
-               <span className='ml-4 '>User 1</span>
+               {/* <span className='ml-4 '>User 1</span>
 <Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link>
 </div>
 <div className='flex items-center justify-between'><span className='ml-4'>User 2</span>
 <Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div>
 <div className='flex items-center justify-between'><span className='ml-4'>User 3</span>
-<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div> */}
+</div>
         </div>
+        
+{users.map( user=>
+   <li key={user.id}>{user.name}</li>
+)}
         
         </div>
     );
