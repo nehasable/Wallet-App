@@ -3,7 +3,7 @@ import userImage from "../pages/icon.png"
 import { Link } from 'react-router-dom';
 import axios from "axios"
 function Dashboard() {
-    const [users,setUsers]=useState("")
+    const [users,setUsers]=useState([])
     useEffect(()=>{
 //display all the users 
 axios.get("http://localhost:3000/api/v1/user/bulk")    //didnt use async function      
@@ -37,9 +37,8 @@ axios.get("http://localhost:3000/api/v1/user/bulk")    //didnt use async functio
 </div>
         </div>
         
-{users.map( user=>
-   <li key={user.id}>{user.name}</li>
-)}
+        {users && users.map(user => <User user={user} />)}
+
         
         </div>
     );
