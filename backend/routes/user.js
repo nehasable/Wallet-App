@@ -126,7 +126,7 @@ router.get("/bulk", async (req, res) => {
         } else {
             // Display list of all users
             const users = await User.find({});
-            res.json({ usersvar: users });
+            res.json({uservar:users} );
         }
     } catch (err) {
         console.error(err);
