@@ -4,19 +4,20 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 
  function Dashboard() {
-    const [usersvar,setUsersVar]=useState([])
+    const [users,setUsers]=useState([])
+    const [filter,setFilter]=useState('')
     useEffect(()=>{
 //display all the users 
-axios.get("http://localhost:3000/api/v1/user/bulk")
+axios.get("http://localhost:3000/api/v1/user/bulk" ,{ params: { filter: filter } })
     .then(response => {
-        setUsersVar(response.data.user);
-        // console.log(response.data.uservar)
+        setUsers(response.data.users);    //-------------------obtained from backend call
+        // console.log(response.data.users)
     })
     .catch(error => {
         console.error('Error fetching users:', error);
     });
     // console.log(usersvar)
-},[])
+},[filter])
 
 
    
@@ -30,29 +31,49 @@ axios.get("http://localhost:3000/api/v1/user/bulk")
                 <div className='flex flex-col p-6'>
                     <span className='ml-4 mb-6 text-xl font-bold'>Your Balance Rs.1000 </span>
                   <span className='ml-4 mb-4 text-lg'> Users</span>  
-                  <input type="text" placeholder='Search users..' className=' ml-4 w-[1350px] border rounded-md border-gray-300 h-10 '></input>
+                  <input onChange={(e)=>setFilter(e.target.value)} type="text" placeholder='Search users..' className=' ml-4 w-[1350px] border rounded-md border-gray-300 h-10 '></input>
                     </div> 
         
-        { usersvar && usersvar.map(user => {console.log(user)
+                    <div className='p-6 flex flex-col gap-8'>
+{/* <div className='flex items-center justify-between'> */}
+   
+               {/* <span className='ml-4 '>User 1</span>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link>
+</div>
+<div className='flex items-center justify-between'><span className='ml-4'>User 2</span>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div>
+<div className='flex items-center justify-between'><span className='ml-4'>User 3</span>
+<Link to="/sendmoney"><button className='bg-blue-500 text-white mr-20 border rounded-lg  h-10 w-40'>Send Money</button></Link></div> */}
+   { users && users.map(user => {
         return <User user={user} />
 
     }
         )
 
         }
+{/* </div> */}
+        </div>
+
+     
         </div>
     );
 }
 
 function User({ user }) {
+
     
     return (
-        <div>
+        <>
+   {/* {user.username[0]} */}
+        <div className="flex items-center justify-between border-b p-4">
             <p>{user.username}</p>
-          
-           
+            <Link to="/sendmoney">
+                <button className="bg-blue-500 text-white border rounded-lg h-8 px-4">Send Money</button>
+            </Link>
         </div>
+        </>
     );
 }
+
 
 export default Dashboard
